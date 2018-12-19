@@ -15,6 +15,12 @@ import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import {todosReducer} from './store/todo.reducer';
+
+import {Header} from "./components/Header"
+import {Footer} from "./components/Footer"
+import TodosList from "./components/TodosList"
+import {TodoContainer} from "./components/TodoContainer"
+
 // Assemblage des différents reducers d'une application
 const reducers = combineReducers({
   todos: todosReducer,
@@ -37,9 +43,7 @@ export default class App extends Component<{}> {
   render() {
     return (
       <Provider store={store}>
-          <View style={styles.container}>
-            <Text style={styles.welcome}>Ici la liste de todos</Text>
-          </View>
+        <TodoContainer />
       </Provider>
     );
   }
