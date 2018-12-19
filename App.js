@@ -9,6 +9,23 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import {createLogger} from 'redux-logger';
+import thunk from 'redux-thunk';
+
+import {todosReducer} from './store/todo.reducer';
+// Assemblage des différents reducers d'une application
+const reducers = combineReducers({
+  todos: todosReducer,
+});
+const logger = createLogger({
+  level: 'log',
+});
+
+// Création du store
+const store = createStore(reducers, applyMiddleware(thunk,logger));
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -19,11 +36,11 @@ const instructions = Platform.select({
 export default class App extends Component<{}> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Provider store={store}>
+          <View style={styles.container}>
+            <Text style={styles.welcome}>Ici la liste de todos</Text>
+          </View>
+      </Provider>
     );
   }
 }
