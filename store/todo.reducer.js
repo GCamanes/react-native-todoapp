@@ -22,7 +22,7 @@ export function todosReducer(state = initialState, action) {
         case ADD_TODO:
             return {
                 ...state,
-                list: [...state.list, new TodoItemObject(action.name, true)],
+                list: [...state.list, {title:action.name, isDone: false}],
             }
         default :
             return state;

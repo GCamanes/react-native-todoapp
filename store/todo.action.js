@@ -1,14 +1,11 @@
-
-import { TodoItemObject } from '../model/TodoItemObject';
-
 export const ADD_TODO = 'ADD_TODO';
 export const TODOS_LOADED = 'TODOS_LOADED';
 export const LOAD_TODOS = 'LOAD_TODOS';
 
 const data = [
-    new TodoItemObject("send an email to kevyn", true),
-    new TodoItemObject("finish conception step", false),
-    new TodoItemObject("do the evalbox test", false)
+    {title:"send an email to kevyn", isDone:true},
+    {title:"finish conception step", isDone:false},
+    {title:"do the evalbox test", isDone:false}
 ]
 const mockFetch = () => {
     return new Promise((resolve) => {
