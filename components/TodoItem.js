@@ -36,10 +36,11 @@ export class TodoItem extends React.Component {
             <View style={styles.todoView}>
                 {
                     (this.state.isDone) ? (
-                        <Text style={styles.todo}>{this.state.title}</Text>
+                        <Text style={styles.todoDone}>{this.state.title}</Text>
                     ) : (
-                            <Text style={styles.todo}>{this.state.title}</Text>
-                        )
+                        <Text style={styles.todo}>{this.state.title}</Text>
+                    )
+                    
                 }
                 <Switch value={this.state.isDone} onValueChange={this.handleInputChange} />
             </View>
@@ -62,6 +63,12 @@ const styles = StyleSheet.create({
         flex: 2,
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    todoDone :{
+        flex: 2,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textDecorationLine: 'line-through'
     },
     switch: {
         flex: 1,

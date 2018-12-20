@@ -1,20 +1,17 @@
-import React, {Component} from 'react';
-import {View, Button, TextInput} from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Button, TextInput, Text } from 'react-native';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import {addTodo, removeTodos} from '../store/todo.action';
+import { addTodo, removeTodos } from '../store/todo.action';
 
-import {Header} from "./Header"
-import {Footer} from "./Footer"
 import TodosList from "./TodosList"
 
 export class TodoContainer extends React.Component {
 
-
     constructor(props) {
         super(props);
-    
+
         this.state = {
             newTodo: "",
         }
@@ -35,39 +32,72 @@ export class TodoContainer extends React.Component {
         if (this.state.newTodo !== "") {
             this.props.addTodo(this.state.newTodo);
             this.textInput.clear();
+            this.setState({
+                newTodo: "",
+            });
         }
     }
 
-    render () {
+    render() {
         return (
             <View>
-                <Header />
-                <Button onPress={() => this.props.removeTodos()} title="Effacer les todos"/>
+                <View style={styles.header}>
+                    <Text style={styles.textHeader}>
+                        Vous avez {this.props.todos.length} todos !
+                    </Text>
+                    <Button style={{flex:1}}onPress={() => this.props.removeTodos()} title="Effacer les todos" />
+                </View>
+
                 <TodosList />
-                <View style={{height: '15%'}} style={{flex:1, flexDirection: 'column'}}>
-                    <View style={{height: 5, backgroundColor:'blue'}}></View>
+                <View style={{ height: '15%' }} style={{ flex: 1, flexDirection: 'column' }}>
+                    <View style={{ height: 5, backgroundColor: 'blue' }}></View>
                     <TextInput ref={input => { this.textInput = input }}
-                        style={{fontSize: 20, fontWeight: 'bold',}}
+                        style={{ fontSize: 20, fontWeight: 'bold', }}
                         placeholder="nouveau todo"
                         onChangeText={(text) => this._handldleTodoInput(text)}
                     />
-                    <Button onPress={() => this._addNewTodo()} title="Ajouter un todo"/>
+                    <Button onPress={() => this._addNewTodo()} title="Ajouter un todo" />
                 </View>
             </View>
         );
     }
 }
 
+const styles = StyleSheet.create({
+    header: {
+        height: "10%",
+        marginTop: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#00f',
+        flexDirection: 'row'
+    },
+    textHeader: {
+        color: '#fff',
+        fontSize: 24,
+        flex: 2
+    }
+});
+
 TodoContainer.propTypes = {
     addTodo: PropTypes.func.isRequired,
     removeTodos: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            isDone: PropTypes.bool.isRequired,
+        })
+    ).isRequired,
 }
-
+const mapStateToProps = state => ({
+    todos: state.todos.list,
+});
 const mapDispatchToProps = dispatch => ({
     addTodo: name => dispatch(addTodo(name)),
-    removeTodos : () => dispatch(removeTodos())
+    removeTodos: () => dispatch(removeTodos())
 })
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(TodoContainer)

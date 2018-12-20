@@ -5,9 +5,6 @@ export const TODOS_LOADED = 'TODOS_LOADED';
 export const LOAD_TODOS = 'LOAD_TODOS';
 
 const data = [
-    {id : 1,title:"send an email to kevyn", isDone:true},
-    {id : 2,title:"finish conception step", isDone:false},
-    {id : 3,title:"do the evalbox test", isDone:false}
 ]
 const mockFetch = () => {
     return new Promise((resolve) => {

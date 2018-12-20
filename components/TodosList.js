@@ -1,9 +1,9 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View, Button, ScrollView} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
-import {addTodo, loadTodos} from '../store/todo.action';
+import {loadTodos} from '../store/todo.action';
 
 import TodoItem from "./TodoItem"
 
@@ -14,11 +14,16 @@ export class TodosList extends React.Component {
     }
     displayTodos () {
         if (this.props.loading) {
-            return <Text style={{fontSize: 20}}>Loading ....</Text>
+            return <Text style={{fontSize: 20}}>Chargement ....</Text>
         }
-        return this.props.todos.map(
-            (item, index) => <TodoItem key={item.id} todo={item} title={item.id+". "+item.title} isDone={item.isDone} />
-        );
+        if (this.props.todos.length > 0) {
+            return this.props.todos.map(
+                (item) => <TodoItem key={item.id} todo={item} title={item.id+". "+item.title} isDone={item.isDone} />
+            );
+        } else {
+            return <Text style={{fontSize: 20}}>Pas de todo sauvegardés</Text>
+        }
+
     }
 
     render() {
