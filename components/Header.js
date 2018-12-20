@@ -9,7 +9,7 @@ export const Header = () => (
 
 const styles = StyleSheet.create({
   header: {
-    height: Platform.OS === 'android' ? 50 : 100,
+    height: Platform.OS === 'android' ? '10%' : 100,
     marginTop: Platform.OS === 'ios' ? 0 : 0,
     ...Platform.select({
       ios: { backgroundColor: '#f00', paddingTop: 24},

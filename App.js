@@ -16,10 +16,7 @@ import thunk from 'redux-thunk';
 
 import {todosReducer} from './store/todo.reducer';
 
-import {Header} from "./components/Header"
-import {Footer} from "./components/Footer"
-import TodosList from "./components/TodosList"
-import {TodoContainer} from "./components/TodoContainer"
+import TodoContainer from "./components/TodoContainer"
 
 // Assemblage des différents reducers d'une application
 const reducers = combineReducers({

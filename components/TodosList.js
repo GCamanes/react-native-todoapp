@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
 import {addTodo, loadTodos} from '../store/todo.action';
 
+import TodoItem from "./TodoItem"
+
 export class TodosList extends React.Component {
 
     componentDidMount() {
@@ -12,32 +14,31 @@ export class TodosList extends React.Component {
     }
     displayTodos () {
         if (this.props.loading) {
-            return <Text>Loading ....</Text>
+            return <Text style={{fontSize: 20}}>Loading ....</Text>
         }
         return this.props.todos.map(
-            (item, index) => <Text key={item.title+"_"+index}>{item.title}</Text>
+            (item, index) => <TodoItem key={item.id} todo={item} title={item.id+". "+item.title} isDone={item.isDone} />
         );
     }
 
     render() {
         console.log(this.props.todos);
         return (
-            <View>
-                <ScrollView style={{height: '85%'}}>
+            <View style={{height: '75%'}}>
+                <ScrollView>
                     {this.displayTodos()}
                 </ScrollView>
-                <Button onPress={() => this.props.addTodo('formation ajoutée via redux')} title="Ajouter un todo"/>
             </View>
         );
     }
 }
 
 TodosList.propTypes = {
-    addTodo: PropTypes.func.isRequired,
     loadTodos: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     todos: PropTypes.arrayOf(
         PropTypes.shape({
+            id: PropTypes.number.isRequired,
             title: PropTypes.string.isRequired,
             isDone: PropTypes.bool.isRequired,
         })
@@ -48,7 +49,6 @@ const mapStateToProps = state => ({
     loading: state.todos.loading,
 });
 const mapDispatchToProps = dispatch => ({
-    addTodo: name => dispatch(addTodo(name)),
     loadTodos: () => dispatch(loadTodos()),
 })
 export default connect(
